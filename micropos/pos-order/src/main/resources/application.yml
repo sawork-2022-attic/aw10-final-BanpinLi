@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: pos-order
+  main:
+    web-application-type: reactive
+  cloud:
+    stream:
+      bindings:
+        orderDelivery-out-0:
+          destination: order-process
+  rabbitmq:
+    virtual-host: vm
+    username: root
+    password: root
+
+server:
+  port: 1147
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:1111/eureka

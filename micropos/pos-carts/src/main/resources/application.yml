@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: pos-carts
+  main:
+    web-application-type: reactive
+server:
+  port: 1146
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:1111/eureka
