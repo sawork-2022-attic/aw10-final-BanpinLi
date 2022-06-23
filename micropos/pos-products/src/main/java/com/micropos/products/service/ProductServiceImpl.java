@@ -8,14 +8,18 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
 
+    private Random random;
+
     public ProductServiceImpl(@Autowired ProductRepository productRepository) {
         this.productRepository = productRepository;
+        this.random = new Random();
     }
 
     @Override
@@ -30,6 +34,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Mono<Product> randomProduct() {
-        return null;
+        return productRepository.getProductByIndex(random.nextInt(7000));
     }
 }

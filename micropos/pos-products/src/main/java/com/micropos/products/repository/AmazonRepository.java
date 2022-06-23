@@ -32,4 +32,13 @@ public class AmazonRepository implements ProductRepository {
             return productList.size() == 0 ? null : productList.get(0);
         });
     }
+
+    @Override
+    public Mono<Product> getProductByIndex(int index) {
+        String sql = "select id, name, price, image from t_product limit ?, 1";
+        return Mono.fromCallable(() -> {
+            List<Product> productList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class), index);
+            return productList.size() == 0 ? null : productList.get(0);
+        });
+    }
 }

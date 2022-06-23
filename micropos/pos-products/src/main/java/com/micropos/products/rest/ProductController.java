@@ -43,6 +43,12 @@ public class ProductController implements ProductsApi {
     }
 
     @Override
+    public Mono<ResponseEntity<ProductDto>> getRandomProduct(ServerWebExchange exchange) {
+        return productService.randomProduct()
+                .map(product -> new ResponseEntity<>(productMapper.toProductDto(product), HttpStatus.OK));
+    }
+
+    @Override
     @Cacheable(value = "products", key = "#productId")
     public Mono<ResponseEntity<ProductDto>> showProductById(String productId, ServerWebExchange exchange) {
         logger.info("query product by id not use cache.");

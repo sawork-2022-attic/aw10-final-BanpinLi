@@ -24,6 +24,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /products/random:
+    get:
+      summary: get a product randomly
+      operationId: getRandomProduct
+      tags:
+        - product
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /products/{productId}:
     get:
       summary: Info for a specific product

@@ -11,4 +11,6 @@ public interface ProductRepository {
 
     Mono<Product> findProduct(String productId);
 
+    Mono<Product> getProductByIndex(int index);
+
 }
