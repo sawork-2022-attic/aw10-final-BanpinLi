@@ -39,6 +39,7 @@ public class CartController implements CartsApi {
 
     private static final String POS_PRODUCTS = "http://POS-PRODUCTS";
     private static final String POS_ORDER = "http://POS-ORDER";
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
     public CartController(WebClient.Builder webClientBuilder, CartService cartService, CartMapper cartMapper, RestTemplate restTemplate, CircuitBreakerFactory circuitBreakerFactory) {
         this.restTemplate = restTemplate;
@@ -50,6 +51,7 @@ public class CartController implements CartsApi {
 
     @Override
     public Mono<ResponseEntity<CartDto>> addProduct(String username, String productId, ServerWebExchange exchange) {
+        logger.info("username = {}, productId = {}", username, productId);
         return cartService.save(getProduct(productId), username)
                 .flatMap(b -> b ?
                         getCart(username, exchange) :
@@ -58,6 +60,7 @@ public class CartController implements CartsApi {
 
     @Override
     public Mono<ResponseEntity<Flux<OrderDto>>> charge(String username, ServerWebExchange exchange) {
+        logger.info("user charge cart, username = {}", username);
         return cartService.getCart(username)
                 .map(cart -> {
                     Flux<OrderDto> orderDtoFlux = Flux.fromStream(cart.getItems().stream())
@@ -76,6 +79,7 @@ public class CartController implements CartsApi {
 
     @Override
     public Mono<ResponseEntity<CartDto>> decreaseProduct(String username, String productId, ServerWebExchange exchange) {
+        logger.info("user decrease product,username = {}, productId = {}", username, productId);
         return cartService.updateDecrease(getProduct(productId), username)
                 .flatMap(b -> b ?
                         getCart(username, exchange) :
@@ -107,6 +111,7 @@ public class CartController implements CartsApi {
 
     @Override
     public Mono<ResponseEntity<CartDto>> increaseProduct(String username, String productId, ServerWebExchange exchange) {
+        logger.info("user increase product,username = {}, productId = {}", username, productId);
         return cartService.updateIncrement(getProduct(productId), username)
                 .flatMap(b -> b ?
                         getCart(username, exchange) :

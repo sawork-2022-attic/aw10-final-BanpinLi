@@ -44,6 +44,7 @@ public class ProductController implements ProductsApi {
 
     @Override
     public Mono<ResponseEntity<ProductDto>> getRandomProduct(ServerWebExchange exchange) {
+        logger.info("get random product");
         return productService.randomProduct()
                 .map(product -> new ResponseEntity<>(productMapper.toProductDto(product), HttpStatus.OK));
     }
