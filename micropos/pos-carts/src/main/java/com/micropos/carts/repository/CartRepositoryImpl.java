@@ -6,11 +6,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class CartRepositoryImpl implements CartRepository {
 
-    private Map<String, Cart> rep = new HashMap<>();
+    private ConcurrentHashMap<String, Cart> rep = new ConcurrentHashMap<>();
 
     @Override
     public Mono<Cart> getCart(String username) {
